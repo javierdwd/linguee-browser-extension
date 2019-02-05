@@ -1,0 +1,1 @@
+A WebExtension for translating terms using the Linguee.com service.
