@@ -1,0 +1,29 @@
+{
+  "name": "linguee-browser-extension",
+  "version": "0.1.0",
+  "description": "A WebExtension for translating terms using the Linguee.com service.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/javierdwd/linguee-browser-extension.git"
+  },
+  "keywords": [
+    "linguee",
+    "translate",
+    "translation",
+    "Addon",
+    "WebExtension"
+  ],
+  "author": "Javier Van Breedan <javierdwd@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/javierdwd/linguee-browser-extension/issues"
+  },
+  "homepage": "https://github.com/javierdwd/linguee-browser-extension#readme",
+  "devDependencies": {
+    "parcel-bundler": "^1.11.0"
+  }
+}
