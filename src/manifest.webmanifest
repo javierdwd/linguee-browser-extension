@@ -32,6 +32,9 @@
   ],
   "browser_action": {
     "default_title": "Linguee-Translator",
+    "default_icon": {
+      "32": "images/icons/icon32.png"
+    },
     "default_popup": "html/popup.html"
   }
 }
