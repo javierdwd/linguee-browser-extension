@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url("https://fonts.googleapis.com/css?family=Roboto");
 
 * {
   box-sizing: border-box;
@@ -6,7 +6,7 @@
 
 html {
   color: #333;
-  font-family: 'Roboto', sans-serif;
+  font-family: "Roboto", sans-serif;
   font-size: 16px;
   margin: 0;
   padding: 0;
@@ -22,8 +22,8 @@ body {
   margin-top: 1rem;
 }
 .translation__phrase {
-  color: #8B4525;
+  color: #8b4525;
 }
 .translation__translation {
-  color: #255A8B;
+  color: #255a8b;
 }

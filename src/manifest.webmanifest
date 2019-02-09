@@ -12,24 +12,16 @@
     "128": "images/icons/icon128.png"
   },
   "background": {
-    "scripts": [
-      "lib/background.js"
-    ],
+    "scripts": ["lib/background.js"],
     "persistent": false
   },
   "content_scripts": [
     {
-      "matches": [
-        "<all_urls>"
-      ],
-      "js": [
-        "lib/content.js"
-      ]
+      "matches": ["<all_urls>"],
+      "js": ["lib/content.js"]
     }
   ],
-  "permissions": [
-    "*://*.linguee.com/*"
-  ],
+  "permissions": ["*://*.linguee.com/*"],
   "browser_action": {
     "default_title": "Linguee-Translator",
     "default_icon": {
