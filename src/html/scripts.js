@@ -1,4 +1,4 @@
-const browser = require("webextension-polyfill");
+import browser from "webextension-polyfill";
 
 function getActiveTab() {
   return browser.tabs.query({ active: true, currentWindow: true });

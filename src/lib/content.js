@@ -1,4 +1,4 @@
-const browser = require("webextension-polyfill");
+import browser from "webextension-polyfill";
 
 browser.runtime.onMessage.addListener((message, sender) => {
   if (message.subject === "requestSelection") {
