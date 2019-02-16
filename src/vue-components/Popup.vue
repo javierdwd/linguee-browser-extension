@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1>Recompilado!</h1>
     <p v-if="!showTranslation">{{ message }}</p>
 
     <div v-if="showTranslation">
@@ -28,7 +29,7 @@
 </template>
 
 <script>
-import PopupStore from "../PopupStore";
+import PopupStore from "../libs/PopupStore";
 
 export default {
   data() {
@@ -38,5 +39,5 @@ export default {
 </script>
 
 <style lang="scss">
-@import "../styles.scss";
+@import "../styles/popup.scss";
 </style>

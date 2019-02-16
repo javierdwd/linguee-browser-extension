@@ -1,7 +1,7 @@
 import browser from "webextension-polyfill";
 import Vue from "vue";
-import PopupStore from "./PopupStore";
-import Popup from "./components/Popup.vue";
+import PopupStore from "../libs/PopupStore";
+import Popup from "../vue-components/Popup";
 
 function getActiveTab() {
   return browser.tabs.query({ active: true, currentWindow: true });
