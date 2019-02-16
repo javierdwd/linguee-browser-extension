@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "node ./build/development.js",
-    "build": "node ./build/production.js"
+    "build": "node ./build/production.js",
+    "postbuild": "find ./dist -name '*.map' -delete"
   },
   "repository": {
     "type": "git",
@@ -33,6 +34,7 @@
     "@babel/core": "7.3.3",
     "@babel/plugin-transform-runtime": "7.2.0",
     "@vue/component-compiler-utils": "2.5.2",
+    "materialize-css": "1.0.0",
     "parcel-bundler": "^1.11.0",
     "sass": "1.17.0",
     "vue": "2.6.6",

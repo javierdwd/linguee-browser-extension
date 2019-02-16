@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>Recompilado!</h1>
     <p v-if="!showTranslation">{{ message }}</p>
 
     <div v-if="showTranslation">
