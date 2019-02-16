@@ -5,8 +5,8 @@ const dist = path.join(__dirname, "../dist/");
 const common = {
   entries: [
     path.join(__dirname, "../src/manifest.webmanifest"),
-    path.join(__dirname, "../src/lib/background.js"),
-    path.join(__dirname, "../src/lib/content.js"),
+    path.join(__dirname, "../src/scripts/background.js"),
+    path.join(__dirname, "../src/scripts/content.js"),
     path.join(__dirname, "../src/html/popup.html"),
     path.join(__dirname, "../src/images/icons/*")
   ],
