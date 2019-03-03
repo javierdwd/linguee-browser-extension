@@ -1,5 +1,6 @@
 export default {
   message: "Please select a word to translate",
   linguee: {},
-  showTranslation: false
+  showTranslation: false,
+  lookingForTranslation: false
 };

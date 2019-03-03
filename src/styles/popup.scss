@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto");
 
+// Global.
 * {
   box-sizing: border-box;
 }
@@ -18,12 +19,5 @@ body {
   padding: 0 15px;
   width: 360px;
 }
-.translation__examples li + li {
-  margin-top: 1rem;
-}
-.translation__phrase {
-  color: #8b4525;
-}
-.translation__translation {
-  color: #255a8b;
-}
+
+//
