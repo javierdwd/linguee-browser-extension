@@ -6,20 +6,20 @@
       <div class="indeterminate"></div>
     </div>
 
-    <PopupResults :linguee="linguee" v-if="showTranslation"></PopupResults>
+    <results :linguee="linguee" v-if="showTranslation"></results>
   </div>
 </template>
 
 <script>
 import PopupStore from "../scripts/PopupStore";
-import PopupResults from "./popup/Results.vue";
+import Results from "./popup/Results.vue";
 
 export default {
   data() {
     return PopupStore;
   },
   components: {
-    PopupResults
+    Results
   }
 };
 </script>
