@@ -2,8 +2,8 @@
   <li>
     <div class="collapsible-header word">
       <a
-        v-if="word.audio.length"
-        @click.stop.prevent="triggerPlayAudio($event, word.audio[0])"
+        v-if="word.audios.length"
+        @click.stop.prevent="triggerPlayAudio($event, word.audios[0])"
         class="word__audio-trigger grey-text text-darken-3"
         href="#"
       >
@@ -35,9 +35,9 @@
       <i class="material-icons grey-text text-darken-3 expand-icon expand-less">more_horiz</i>
       <i class="material-icons grey-text text-darken-3 expand-icon expand-more">expand_more</i>
 
-      <div class="audios" :class="{'audios--show': showAudioOptions}" v-if="word.audio.length">
+      <div class="audios" :class="{'audios--show': showAudioOptions}" v-if="word.audios.length">
         <results-audio
-          v-for="(audio, index) in word.audio"
+          v-for="(audio, index) in word.audios"
           :key="index"
           :audio="audio"
           @ended="endedAudio"
@@ -94,7 +94,7 @@ export default {
       audio.active = true;
     },
     endedAudio({ audio }) {
-      this.word.audio[this.word.audio.indexOf(audio)].active = false;
+      this.word.audios[this.word.audios.indexOf(audio)].active = false;
     }
   },
   watch: {
@@ -105,7 +105,7 @@ export default {
     }
   },
   beforeMount() {
-    for (let audio of this.word.audio) {
+    for (let audio of this.word.audios) {
       this.$set(audio, "active", false);
     }
   }
