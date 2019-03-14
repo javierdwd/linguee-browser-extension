@@ -1,7 +1,13 @@
+import browser from "webextension-polyfill";
 import Vue from "vue";
 import Popup from "../vue-components/Popup";
 import { messageActiveTab } from "../utils/Message";
 import { lookForTranslation } from "../utils/Translator";
+
+// Inject content-script.
+browser.tabs.executeScript({
+  file: "scripts/content.js"
+});
 
 window.onload = () => {
   new Vue({
