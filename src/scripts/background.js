@@ -14,14 +14,16 @@ const requestTranslation = async function(message) {
     "spanish"
   );
 
-  try {
-    storage.tsCache[message.term] = lingueeResult;
+  if (lingueeResult.noResults === false) {
+    try {
+      storage.tsCache[message.term] = lingueeResult;
 
-    await browser.storage.local.set({
-      tsCache: storage.tsCache
-    });
-  } catch (error) {
-    console.log(error);
+      await browser.storage.local.set({
+        tsCache: storage.tsCache
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return lingueeResult;
