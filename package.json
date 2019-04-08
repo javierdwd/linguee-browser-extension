@@ -27,7 +27,6 @@
   },
   "homepage": "https://github.com/javierdwd/linguee-browser-extension#readme",
   "dependencies": {
-    "linguee-client": "file:../linguee-client",
     "webextension-polyfill": "^0.4.0"
   },
   "devDependencies": {
