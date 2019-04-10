@@ -17,6 +17,7 @@ export default {
       searchTerm: ""
     };
   },
+
   methods: {
     doSearch(term) {
       lookForTranslation(this.searchTerm);

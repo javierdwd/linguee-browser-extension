@@ -10,7 +10,13 @@
 
 <script>
 export default {
-  props: ["audio"],
+  props: {
+    audio: {
+      type: Object,
+      required: true
+    }
+  },
+
   data() {
     return {
       cache: null,
@@ -18,6 +24,7 @@ export default {
       playing: false
     };
   },
+
   methods: {
     load() {
       this.loading = true;
@@ -54,6 +61,7 @@ export default {
       this.cache.play();
     }
   },
+
   watch: {
     "audio.active": function(newValue, oldValue) {
       if (!newValue) {

@@ -17,9 +17,11 @@ let mCollapsibleInst;
 
 export default {
   props: ["linguee"],
+
   components: {
     ResultsWord
   },
+
   methods: {
     createCollapsibleInst() {
       mCollapsibleInst = M.Collapsible.init(this.$refs["linguee-results"], {
@@ -44,17 +46,21 @@ export default {
       }
     }
   },
+
   beforeMount() {
     for (let word of this.linguee.words) {
       this.$set(word, "selected", false);
     }
   },
+
   mounted() {
     this.createCollapsibleInst();
   },
+
   beforeUpdate() {
     this.destroyCollapsibleInst();
   },
+
   updated() {
     this.createCollapsibleInst();
   }

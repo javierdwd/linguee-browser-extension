@@ -77,16 +77,28 @@
 import ResultsAudio from "./ResultsAudio";
 
 export default {
-  props: ["word", "selected"],
   components: {
     ResultsAudio
   },
+
+  props: {
+    word: {
+      type: String,
+      required: true
+    },
+    selected: {
+      type: String,
+      required: true
+    }
+  },
+
   data() {
     return {
       playingAudio: false,
       showAudioOptions: false
     };
   },
+
   methods: {
     triggerPlayAudio($event, audio) {
       this.showAudioOptions = true;
@@ -97,6 +109,7 @@ export default {
       this.word.audios[this.word.audios.indexOf(audio)].active = false;
     }
   },
+
   watch: {
     selected(newValue, oldValue) {
       if (newValue === false) {
@@ -104,6 +117,7 @@ export default {
       }
     }
   },
+
   beforeMount() {
     for (let audio of this.word.audios) {
       this.$set(audio, "active", false);

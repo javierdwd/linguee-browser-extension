@@ -6,7 +6,7 @@
       <div class="indeterminate"></div>
     </div>
 
-    <results :linguee="linguee" v-if="showTranslation"></results>
+    <results-panel :linguee="linguee" v-if="showTranslation"></results-panel>
 
     <search-box v-if="!showTranslation && !lookingForTranslation"></search-box>
   </div>
@@ -14,17 +14,19 @@
 
 <script>
 import PopupStore from "../utils/PopupStore";
-import Results from "./results/Results.vue";
+import ResultsPanel from "./results/ResultsPanel.vue";
 import SearchBox from "./SearchBox.vue";
 
 export default {
   data() {
     return PopupStore;
   },
+
   components: {
-    Results,
+    ResultsPanel,
     SearchBox
   },
+
   computed: {
     showMessage() {
       return !this.showTranslation && this.message !== "";
