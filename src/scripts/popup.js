@@ -1,15 +1,10 @@
 import browser from "webextension-polyfill";
 import Vue from "vue";
 import Popup from "../vue-components/Popup";
-import { messageActiveTab } from "../utils/Message";
+import { messageActiveTab, logActiveTab } from "../utils/Message";
 import { lookForTranslation } from "../utils/Translator";
 
-// Inject content-script.
-browser.tabs.executeScript({
-  file: "scripts/content.js"
-});
-
-window.onload = () => {
+const renderPopup = () => {
   new Vue({
     el: "#linguee-translator",
     render: h => h(Popup),
@@ -28,3 +23,16 @@ window.onload = () => {
       console.log(error);
     });
 };
+
+// Inject content-script conditionally.
+messageActiveTab({ subject: "listen" })
+  .then(() => {
+    renderPopup();
+  })
+  .catch(() => {
+    browser.tabs.executeScript({
+      file: "scripts/content.js"
+    });
+
+    renderPopup();
+  });
