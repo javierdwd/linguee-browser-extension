@@ -36,5 +36,7 @@ export function logActiveTab(data) {
   messageActiveTab({
     subject: "log",
     data
+  }).catch(error => {
+    console.log(error);
   });
 }
