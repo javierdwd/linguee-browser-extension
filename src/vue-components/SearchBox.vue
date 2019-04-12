@@ -1,14 +1,19 @@
 <template>
   <div id="search-box">
-    <div class="input-field">
-      <i class="material-icons prefix">search</i>
-      <input id="icon_prefix" type="text" v-model="searchTerm" @keyup.enter="doSearch" autofocus>
-      <label for="icon_prefix">Translate...</label>
-    </div>
+    <form @submit.prevent autocomplete="off">
+      <input autocomplete="false" name="hidden" type="text" class="hidden">
+
+      <div class="input-field">
+        <i class="material-icons prefix">search</i>
+        <input id="search-input" type="text" v-model="searchTerm" @keyup.enter="doSearch" autofocus>
+        <label for="search-input">Translate...</label>
+      </div>
+    </form>
   </div>
 </template>
 
 <script>
+import Store from "../utils/PopupStore";
 import { lookForTranslation } from "../utils/Translator";
 
 export default {
@@ -19,16 +24,31 @@ export default {
   },
 
   methods: {
-    doSearch(term) {
-      lookForTranslation(this.searchTerm);
+    doSearch($event) {
+      Store.set("lookingForTranslation", true);
 
-      this.searchTerm = "";
+      lookForTranslation(this.searchTerm)
+        .then(result => {
+          this.$emit("result", result);
+
+          Store.set("lookingForTranslation", false);
+
+          this.searchTerm = "";
+        })
+        .catch(error => {
+          console.log(error);
+
+          this.searchTerm = "";
+        });
     }
   }
 };
 </script>
 
 <style lang="scss" scoped>
+input.hidden {
+  display: none !important;
+}
 #search-box {
   padding-top: 5px;
 }
