@@ -83,11 +83,11 @@ export default {
 
   props: {
     word: {
-      type: String,
+      type: Object,
       required: true
     },
     selected: {
-      type: String,
+      type: Boolean,
       required: true
     }
   },
