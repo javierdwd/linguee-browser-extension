@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import Store from "../utils/PopupStore";
+import Store from "../utils/Store";
 import { lookForTranslation } from "../utils/Translator";
 
 export default {
