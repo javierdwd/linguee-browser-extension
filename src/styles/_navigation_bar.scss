@@ -1,0 +1,14 @@
+.tabs.popup-bar {
+  display: flex;
+  width: $popup-width;
+  margin-top: auto;
+
+  .tab {
+    width: 33.333%;
+  }
+  .tab a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}

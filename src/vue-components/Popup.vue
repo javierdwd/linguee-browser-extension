@@ -1,58 +1,20 @@
 <template>
   <div id="extension-popup">
-    <p v-if="showMessage">{{ message }}</p>
-
-    <div class="progress" v-if="showSpinner">
-      <div class="indeterminate"></div>
+    <div class="panels-container">
+      <div class="panel"></div>
     </div>
 
-    <results-panel v-if="showLingueeResults" :linguee="results"></results-panel>
-
-    <search-box v-if="!showLingueeResults" @result="onResult"></search-box>
+    <navigation-bar></navigation-bar>
   </div>
 </template>
 
 <script>
 import Store from "/utils/Store";
-import ResultsPanel from "./results/ResultsPanel.vue";
-import SearchBox from "./SearchBox.vue";
+import NavigationBar from "./NavigationBar";
 
 export default {
   components: {
-    ResultsPanel,
-    SearchBox
-  },
-
-  data() {
-    return {
-      message: "No translation could be found.",
-      results: null,
-      showLingueeResults: false
-    };
-  },
-
-  computed: {
-    showMessage() {
-      return !this.showSpinner && this.results && this.results.noResults;
-    },
-    showSearchBox() {
-      return !Store.get("lookingForTranslation");
-    },
-    showSpinner() {
-      return Store.get("lookingForTranslation");
-    }
-  },
-
-  methods: {
-    onResult(results) {
-      this.results = results;
-
-      if (results.noResults === false && results.words.length) {
-        this.showLingueeResults = true;
-      } else {
-        this.showLingueeResults = false;
-      }
-    }
+    NavigationBar
   }
 };
 </script>
