@@ -7,7 +7,9 @@ function log(prop, payload) {
 const store = {
   debug: false,
   state: {
-    panel: "search"
+    panel: "settings",
+    langFrom: null,
+    langTo: null
   },
   setDebug(payload) {
     if (payload) log("debug", payload);

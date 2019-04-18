@@ -1,0 +1,25 @@
+// Settings.
+#settings.panel {
+  .container {
+    margin-top: 1rem;
+  }
+  .select-wrapper {
+    overflow: visible;
+  }
+  .select-dropdown {
+    text-transform: capitalize;
+  }
+  .dropdown-content {
+    height: 220px !important;
+
+    li span {
+      text-transform: capitalize;
+    }
+    li img {
+      height: 18px;
+      margin-top: 16px;
+      object-fit: cover;
+      width: 24px;
+    }
+  }
+}

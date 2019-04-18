@@ -29,20 +29,17 @@ body {
   display: flex;
   flex-flow: column nowrap;
   font-family: "Roboto", sans-serif;
-  padding: 0;
+  height: 100vh;
   min-height: 300px;
+  padding: 0;
   width: 100%;
 }
 
+// Panels.
+@import "./panel";
+
 // Navigation Bar.
 @import "./navigation_bar";
-
-// Panels.
-.panels-container {
-  background-color: #f9f9f9;
-  flex-grow: 1;
-  position: relative;
-}
 
 // Results
 .collapsible-header {
