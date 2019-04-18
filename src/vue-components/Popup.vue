@@ -1,7 +1,7 @@
 <template>
   <div id="extension-popup">
     <div class="panels-container">
-      <div class="panel"></div>
+      <component :is="activePanel"></component>
     </div>
 
     <navigation-bar></navigation-bar>
@@ -10,11 +10,21 @@
 
 <script>
 import Store from "/utils/Store";
+import Settings from "./Settings";
 import NavigationBar from "./NavigationBar";
 
 export default {
   components: {
+    Settings,
     NavigationBar
+  },
+
+  computed: {
+    activePanel() {
+      let panel = Store.get("panel");
+
+      return panel[0].toUpperCase() + panel.substr(1);
+    }
   }
 };
 </script>
