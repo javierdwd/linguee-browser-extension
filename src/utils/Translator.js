@@ -1,15 +1,8 @@
 import { messageRuntime } from "./Message";
 
-const Translator = {};
-
-export default Translator;
-
-export function lookForTranslation(term) {
+const callBackground = function(props) {
   return new Promise((resolve, reject) => {
-    messageRuntime({
-      subject: "requestTranslation",
-      term
-    })
+    messageRuntime(props)
       .then(data => {
         resolve(data);
       })
@@ -17,4 +10,30 @@ export function lookForTranslation(term) {
         reject(error);
       });
   });
+};
+
+export function lookForTranslation(term) {
+  return callBackground({
+    subject: "requestTranslation",
+    term
+  });
 }
+
+export function getLangs() {
+  return callBackground({
+    subject: "getLangs"
+  });
+}
+
+export function getAvailablesLangsByCode(code) {
+  return callBackground({
+    subject: "getAvailablesLangsByCode",
+    code
+  });
+}
+
+export default {
+  lookForTranslation,
+  getLangs,
+  getAvailablesLangsByCode
+};

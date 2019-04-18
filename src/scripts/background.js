@@ -32,5 +32,9 @@ const requestTranslation = async function(message) {
 browser.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
   if (message.subject === "requestTranslation") {
     return requestTranslation(message, sender, sendResponse);
+  } else if (message.subject === "getLangs") {
+    return linguee.langs.list();
+  } else if (message.subject === "getAvailablesLangsByCode") {
+    return linguee.langs.available(message.code);
   }
 });
