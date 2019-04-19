@@ -1,20 +1,22 @@
 <template>
   <div id="search-box">
+    <h3>Enter the word you want to translate</h3>
+
     <form @submit.prevent autocomplete="off">
       <input autocomplete="false" name="hidden" type="text" class="hidden">
 
       <div class="input-field">
         <i class="material-icons prefix">search</i>
         <input id="search-input" type="text" v-model="searchTerm" @keyup.enter="doSearch" autofocus>
-        <label for="search-input">Translate...</label>
+        <label for="search-input">Search...</label>
       </div>
     </form>
   </div>
 </template>
 
 <script>
-import Store from "../utils/Store";
-import { lookForTranslation } from "../utils/Translator";
+import Store from "/utils/Store";
+import { lookForTranslation } from "/utils/Translator";
 
 export default {
   data() {
@@ -44,13 +46,3 @@ export default {
   }
 };
 </script>
-
-<style lang="scss" scoped>
-input.hidden {
-  display: none !important;
-}
-#search-box {
-  padding-top: 5px;
-}
-</style>
-
