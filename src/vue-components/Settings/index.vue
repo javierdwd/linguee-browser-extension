@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import Store from "/utils/Store";
+import Store, { saveLangSetting } from "/utils/Store";
 import Translator from "/utils/Translator";
 import MFormSelect from "/vue-components/common/MFormSelect";
 
@@ -60,18 +60,18 @@ export default {
   },
 
   methods: {
-    onChange(selectName, selectedLang) {
+    onChange(selectName, selected) {
       if (
-        selectedLang === "no-selected" ||
-        Store.get(`lang${selectName}`) === selectedLang
+        selected === "no-selected" ||
+        Store.get(`lang${selectName}`) === selected
       ) {
         return false;
       }
 
-      Store.set(`lang${selectName}`, selectedLang);
+      saveLangSetting(`lang${selectName}`, selected);
 
       if (selectName === "From") {
-        this.populateToOptions(selectedLang);
+        this.populateToOptions(selected);
       }
     },
     populateFromOptions(selected = false) {
@@ -89,7 +89,7 @@ export default {
 
         selected = selected || aLangs[0].langCode;
 
-        Store.set("langTo", selected);
+        saveLangSetting(`langTo`, selected);
 
         this.toOptions = formatOptions(aLangs, selected);
       });

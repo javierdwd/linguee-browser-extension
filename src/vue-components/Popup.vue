@@ -1,7 +1,7 @@
 <template>
   <div id="extension-popup">
     <div class="panels-container">
-      <component :is="activePanel"></component>
+      <component :is="activePanel" v-if="ready"></component>
     </div>
 
     <navigation-bar></navigation-bar>
@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import Store from "/utils/Store";
+import Store, { loadSettings } from "/utils/Store";
 import Settings from "./Settings";
 import NavigationBar from "./NavigationBar";
 
@@ -19,12 +19,24 @@ export default {
     NavigationBar
   },
 
+  data() {
+    return {
+      ready: false
+    };
+  },
+
   computed: {
     activePanel() {
       let panel = Store.get("panel");
 
       return panel[0].toUpperCase() + panel.substr(1);
     }
+  },
+
+  created() {
+    loadSettings().then(settings => {
+      this.ready = true;
+    });
   }
 };
 </script>
