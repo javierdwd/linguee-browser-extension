@@ -28,7 +28,7 @@ export async function readStorage(storageKey) {
 const store = {
   debug: false,
   state: {
-    panel: "search",
+    panel: "history",
     langFrom: null,
     langTo: null,
     currentTranslation: null
@@ -50,8 +50,6 @@ const store = {
 
 export async function loadSettings() {
   const settings = await readStorage("settings");
-
-  console.log(settings);
 
   if (settings.langFrom && settings.langTo) {
     store.set("langFrom", settings.langFrom);
