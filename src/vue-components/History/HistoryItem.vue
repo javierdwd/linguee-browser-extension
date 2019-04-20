@@ -1,12 +1,12 @@
 <template>
   <li class="collection-item">
-    <div class="term">discussion</div>
+    <div class="term">{{ item.queryTerm }}</div>
 
     <div class="actions basic active">
-      <a href="#!" class>
+      <a href="#">
         <i class="material-icons">search</i>
       </a>
-      <a href="#!" class>
+      <a href="#!">
         <i class="material-icons">delete</i>
       </a>
     </div>
@@ -16,3 +16,14 @@
     </div>
   </li>
 </template>
+
+<script>
+export default {
+  props: {
+    item: {
+      type: Object,
+      required: true
+    }
+  }
+};
+</script>

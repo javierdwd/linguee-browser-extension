@@ -6,7 +6,7 @@
       </h3>
     </li>
 
-    <history-item></history-item>
+    <history-item v-for="item in list" :item="item" :key="item.id"></history-item>
   </ul>
 </template>
 
@@ -16,6 +16,13 @@ import HistoryItem from "./HistoryItem";
 export default {
   components: {
     HistoryItem
+  },
+
+  props: {
+    list: {
+      type: Array,
+      default: []
+    }
   }
 };
 </script>

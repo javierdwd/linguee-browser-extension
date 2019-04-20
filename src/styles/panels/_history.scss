@@ -1,10 +1,17 @@
 // History.
 #history.panel {
-  padding: 0 0 1rem;
+  padding: 1rem 0;
 
   h3 {
     margin: 0;
     text-align: center;
+  }
+  .row {
+    margin: 0;
+  }
+  .collection {
+    margin: 0;
+    padding: 0;
   }
   .collection-item {
     display: flex;

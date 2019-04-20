@@ -17,7 +17,25 @@ const requestTranslation = async function(message) {
   const storage = await browser.storage.local.get({ tsCache: {} });
   const id = `${message.langFrom}-${message.langTo}-${message.term}`;
 
+  const updateTsCache = async function(translation) {
+    try {
+      // Update/Insert translation.
+      storage.tsCache[translation.id] = translation;
+
+      // Replace the entire copy of tsCache in the browser.
+      await browser.storage.local.set({
+        tsCache: storage.tsCache
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   if (storage.tsCache.hasOwnProperty(id)) {
+    storage.tsCache[id].hits++;
+
+    updateTsCache(storage.tsCache[id]);
+
     return storage.tsCache[id];
   }
 
@@ -29,25 +47,18 @@ const requestTranslation = async function(message) {
 
   const supported = supportedData(apiResponse);
 
+  // Create a new Translation object.
   const translation = {
     id,
-    queryTerm: message.term,
-    time: new Date().getTime(),
+    queryTerm: apiResponse.queryTerm,
+    time: Date.now(),
     hits: 1,
     data: supported ? apiResponse : null,
     tempData: apiResponse
   };
 
   if (supported) {
-    try {
-      storage.tsCache[translation.id] = translation;
-
-      await browser.storage.local.set({
-        tsCache: storage.tsCache
-      });
-    } catch (error) {
-      console.log(error);
-    }
+    updateTsCache();
   }
 
   return translation;
