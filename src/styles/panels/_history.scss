@@ -1,0 +1,63 @@
+// History.
+#history.panel {
+  padding: 0 0 1rem;
+
+  h3 {
+    margin: 0;
+    text-align: center;
+  }
+  .collection-item {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    line-height: 1;
+    padding-left: 15px;
+    padding-right: 15px;
+
+    .term {
+      line-height: 1.2;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      width: calc(70% - 30px);
+    }
+    .remove-term {
+      color: #e73c3c;
+    }
+    .actions {
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+      width: 30%;
+
+      .material-icons {
+        font-size: 1.3rem;
+      }
+      .cancel {
+        font-size: 0.8rem;
+        color: #dd3535;
+      }
+      .confirm {
+        color: #008000;
+      }
+      &.confirm-remove {
+        flex-basis: 100%;
+        padding-left: 15px;
+        padding-right: 15px;
+      }
+      &.basic,
+      &.confirm-remove {
+        display: none;
+
+        &.active {
+          display: block;
+        }
+      }
+    }
+    &:hover .actions {
+      opacity: 1;
+    }
+  }
+}

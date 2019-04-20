@@ -12,6 +12,7 @@
 import Store, { loadSettings } from "/utils/Store";
 import Search from "./Search";
 import Results from "./Results";
+import History from "./History";
 import Settings from "./Settings";
 import NavigationBar from "./NavigationBar";
 
@@ -19,6 +20,7 @@ export default {
   components: {
     Search,
     Results,
+    History,
     Settings,
     NavigationBar
   },
