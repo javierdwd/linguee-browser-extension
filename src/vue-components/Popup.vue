@@ -10,11 +10,15 @@
 
 <script>
 import Store, { loadSettings } from "/utils/Store";
+import Search from "./Search";
+import Results from "./Results";
 import Settings from "./Settings";
 import NavigationBar from "./NavigationBar";
 
 export default {
   components: {
+    Search,
+    Results,
     Settings,
     NavigationBar
   },
@@ -34,9 +38,13 @@ export default {
   },
 
   created() {
-    loadSettings().then(settings => {
-      this.ready = true;
-    });
+    loadSettings()
+      .then(settings => {
+        this.ready = true;
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 };
 </script>

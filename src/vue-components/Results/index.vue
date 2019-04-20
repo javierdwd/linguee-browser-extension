@@ -1,25 +1,32 @@
 <template>
-  <ul class="collapsible" ref="linguee-results">
-    <results-word
-      v-for="(word, index) in linguee.words"
-      :key="index"
-      :selected="word.selected"
-      :class="{ active: (index === 0) }"
-      :word="word"
-    ></results-word>
-  </ul>
+  <div id="results" class="panel">
+    <ul class="collapsible" ref="linguee-results" v-if="tData.words.length">
+      <results-word
+        v-for="(word, index) in tData.words"
+        :key="index"
+        :selected="word.selected"
+        :class="{ active: (index === 0) }"
+        :word="word"
+      ></results-word>
+    </ul>
+  </div>
 </template>
 
 <script>
+import Store from "/utils/Store";
 import ResultsWord from "./ResultsWord";
 
 let mCollapsibleInst;
 
 export default {
-  props: ["linguee"],
-
   components: {
     ResultsWord
+  },
+
+  computed: {
+    tData() {
+      return Store.get("currentTranslation").data;
+    }
   },
 
   methods: {
@@ -28,15 +35,15 @@ export default {
         onOpenEnd: li => {
           const index = Array.from(li.parentElement.childNodes).indexOf(li);
 
-          for (let word of this.linguee.words) {
+          for (let word of this.tData.words) {
             word.selected = false;
           }
 
-          this.linguee.words[index].selected = true;
+          this.tData.words[index].selected = true;
         }
       });
 
-      this.linguee.words[0].selected = true;
+      this.tData.words[0].selected = true;
     },
     destroyCollapsibleInst() {
       if (mCollapsibleInst) {
@@ -47,8 +54,14 @@ export default {
     }
   },
 
+  beforeCreate() {
+    if (Store.get("currentTranslation") === null) {
+      Store.set("panel", "search");
+    }
+  },
+
   beforeMount() {
-    for (let word of this.linguee.words) {
+    for (let word of this.tData.words) {
       this.$set(word, "selected", false);
     }
   },
@@ -63,6 +76,10 @@ export default {
 
   updated() {
     this.createCollapsibleInst();
+  },
+
+  destroyed() {
+    Store.set("currentTranslation", null);
   }
 };
 </script>

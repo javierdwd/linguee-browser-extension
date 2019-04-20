@@ -1,22 +1,46 @@
 import browser from "webextension-polyfill";
 import linguee from "linguee-client";
 
-const requestTranslation = async function(message) {
-  const storage = await browser.storage.local.get({ tsCache: {} });
-
-  if (storage.tsCache.hasOwnProperty(message.term)) {
-    return storage.tsCache[message.term];
+const supportedData = apiResponse => {
+  // No information of any kind was returned.
+  if (apiResponse.noResults) {
+    return false;
+  }
+  if (apiResponse.words.length) {
+    return true;
   }
 
-  const lingueeResult = await linguee.translate(
+  return false;
+};
+
+const requestTranslation = async function(message) {
+  const storage = await browser.storage.local.get({ tsCache: {} });
+  const id = `${message.langFrom}-${message.langTo}-${message.term}`;
+
+  if (storage.tsCache.hasOwnProperty(id)) {
+    return storage.tsCache[id];
+  }
+
+  const apiResponse = await linguee.translate(
     message.term,
-    "english",
-    "spanish"
+    message.langFrom,
+    message.langTo
   );
 
-  if (lingueeResult.noResults === false) {
+  const supported = supportedData(apiResponse);
+
+  const translation = {
+    id,
+    queryTerm: message.term,
+    time: new Date().getTime(),
+    hits: 1,
+    data: supported ? apiResponse : null,
+    tempData: apiResponse
+  };
+
+  if (supported) {
     try {
-      storage.tsCache[message.term] = lingueeResult;
+      storage.tsCache[translation.id] = translation;
 
       await browser.storage.local.set({
         tsCache: storage.tsCache
@@ -26,7 +50,7 @@ const requestTranslation = async function(message) {
     }
   }
 
-  return lingueeResult;
+  return translation;
 };
 
 browser.runtime.onMessage.addListener(async (message, sender, sendResponse) => {

@@ -1,21 +1,15 @@
 import { messageRuntime } from "./Message";
 
 const callBackground = function(props) {
-  return new Promise((resolve, reject) => {
-    messageRuntime(props)
-      .then(data => {
-        resolve(data);
-      })
-      .catch(error => {
-        reject(error);
-      });
-  });
+  return messageRuntime(props);
 };
 
-export function lookForTranslation(term) {
+export function lookForTranslation(term, langFrom, langTo) {
   return callBackground({
     subject: "requestTranslation",
-    term
+    term,
+    langFrom,
+    langTo
   });
 }
 

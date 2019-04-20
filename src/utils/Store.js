@@ -18,7 +18,9 @@ export async function saveStorage(storageKey, data) {
 }
 
 export async function readStorage(storageKey) {
-  const storage = await browser.storage.local.get(storageKey);
+  const storage = await browser.storage.local.get({
+    [storageKey]: {} // Opera doesn't need this, but Chrome/Firefox does.
+  });
 
   return storage[storageKey];
 }
@@ -26,9 +28,10 @@ export async function readStorage(storageKey) {
 const store = {
   debug: false,
   state: {
-    panel: "settings",
+    panel: "search",
     langFrom: null,
-    langTo: null
+    langTo: null,
+    currentTranslation: null
   },
   setDebug(payload) {
     if (payload) log("debug", payload);
@@ -48,8 +51,12 @@ const store = {
 export async function loadSettings() {
   const settings = await readStorage("settings");
 
-  store.set("langFrom", settings.langFrom);
-  store.set("langTo", settings.langTo);
+  console.log(settings);
+
+  if (settings.langFrom && settings.langTo) {
+    store.set("langFrom", settings.langFrom);
+    store.set("langTo", settings.langTo);
+  }
 
   return settings;
 }
