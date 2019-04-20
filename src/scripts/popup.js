@@ -5,7 +5,7 @@ import Popup from "/vue-components/Popup";
 import { messageActiveTab } from "/utils/Message";
 
 const renderPopup = () => {
-  Store.setDebug(true);
+  Store.setDebug(process.env.NODE_ENV === "development");
 
   new Vue({
     el: "#linguee-translator",
