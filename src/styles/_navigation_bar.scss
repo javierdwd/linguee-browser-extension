@@ -3,6 +3,10 @@
   width: $popup-width;
   margin-top: auto;
 
+  .indicator {
+    bottom: auto;
+    top: 0;
+  }
   .tab {
     width: 33.333%;
   }

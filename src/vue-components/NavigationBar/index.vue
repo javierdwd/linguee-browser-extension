@@ -3,8 +3,8 @@
     <navigation-button
       v-show="activePanel === 'results'"
       v-on:change-tab="onChangeTab"
-      :active="true"
-      :name="'search'"
+      :active="activePanel == 'results'"
+      :name="'results'"
     >close</navigation-button>
 
     <navigation-button
@@ -55,6 +55,10 @@ export default {
       }
     },
     onChangeTab(name) {
+      if (name === "results") {
+        name = "search";
+      }
+
       Store.set("panel", name);
     }
   },
