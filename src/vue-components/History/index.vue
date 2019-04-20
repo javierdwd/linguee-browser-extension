@@ -3,10 +3,10 @@
     <div class="container" v-if="ready">
       <div class="row">
         <div class="col s6">
-          <history-list :list="latestList">Latest translations</history-list>
+          <history-list :list="latestList" @deleted="onDeleted">Latest translations</history-list>
         </div>
         <div class="col s6">
-          <history-list :list="popularList">Popular</history-list>
+          <history-list :list="popularList" @deleted="onDeleted">Popular</history-list>
         </div>
       </div>
     </div>
@@ -14,7 +14,7 @@
 </template>
 
 <script>
-import { getRankings } from "/utils/Store";
+import Store, { loadRankings } from "/utils/Store";
 import HistoryList from "./HistoryList";
 
 export default {
@@ -24,18 +24,24 @@ export default {
 
   data() {
     return {
-      ready: false,
-      latestList: [],
-      popularList: []
+      ready: false
     };
   },
 
-  created() {
-    getRankings()
-      .then(rankings => {
-        this.latestList = rankings.latest;
-        this.popularList = rankings.popular;
+  computed: {
+    latestList: () => Store.get("historyLatest"),
+    popularList: () => Store.get("historyPopular")
+  },
 
+  methods: {
+    onDeleted() {
+      loadRankings();
+    }
+  },
+
+  created() {
+    loadRankings()
+      .then(() => {
         this.ready = true;
       })
       .catch(error => {

@@ -64,9 +64,31 @@ const requestTranslation = async function(message) {
   return translation;
 };
 
-browser.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
+const removeTranslation = async function(message) {
+  const storage = await browser.storage.local.get({ tsCache: {} });
+
+  if (storage.tsCache.hasOwnProperty(message.id)) {
+    delete storage.tsCache[message.id];
+
+    try {
+      await browser.storage.local.set({
+        tsCache: storage.tsCache
+      });
+    } catch (error) {
+      console.log(error);
+
+      return false;
+    }
+
+    return true;
+  }
+};
+
+browser.runtime.onMessage.addListener(async (message, sender) => {
   if (message.subject === "requestTranslation") {
-    return requestTranslation(message, sender, sendResponse);
+    return requestTranslation(message, sender);
+  } else if (message.subject === "removeTranslation") {
+    return removeTranslation(message, sender);
   } else if (message.subject === "getLangs") {
     return linguee.langs.list();
   } else if (message.subject === "getAvailablesLangsByCode") {

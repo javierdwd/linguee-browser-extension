@@ -31,7 +31,10 @@ const store = {
     panel: "history",
     langFrom: null,
     langTo: null,
-    currentTranslation: null
+    currentTranslation: null,
+    queueSearch: null,
+    historyLatest: null,
+    historyPopular: null
   },
   setDebug(payload) {
     if (payload) log("debug", payload);
@@ -69,10 +72,10 @@ export function saveLangSetting(stateProp, value) {
 
 export async function getRankings() {
   const rankings = {};
-  const history = await readStorage("tsCache");
+  const tsCache = await readStorage("tsCache");
   const limit = 8;
 
-  const historyList = Object.entries(history).map(x => {
+  const historyList = Object.entries(tsCache).map(x => {
     x[1].cDate = new Date(x[1].time);
 
     return x[1];
@@ -98,6 +101,18 @@ export async function getRankings() {
     .slice(0, limit);
 
   return rankings;
+}
+
+export async function loadRankings() {
+  const rankings = await getRankings();
+
+  store.set("historyLatest", rankings.latest);
+  store.set("historyPopular", rankings.popular);
+}
+
+export function doSearch(queryTerm) {
+  store.set("queueSearch", queryTerm);
+  store.set("panel", "search");
 }
 
 export default store;

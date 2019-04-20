@@ -13,6 +13,13 @@ export function lookForTranslation(term, langFrom, langTo) {
   });
 }
 
+export function removeTranslation(id) {
+  return callBackground({
+    subject: "removeTranslation",
+    id
+  });
+}
+
 export function getLangs() {
   return callBackground({
     subject: "getLangs"
@@ -28,6 +35,7 @@ export function getAvailablesLangsByCode(code) {
 
 export default {
   lookForTranslation,
+  removeTranslation,
   getLangs,
   getAvailablesLangsByCode
 };

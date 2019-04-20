@@ -54,17 +54,23 @@
         padding-left: 15px;
         padding-right: 15px;
       }
-      &.basic,
       &.confirm-remove {
         display: none;
-
-        &.active {
-          display: block;
-        }
       }
     }
     &:hover .actions {
       opacity: 1;
+    }
+  }
+  .collection-item.confirm-mode {
+    .term {
+      display: none;
+    }
+    .actions.basic {
+      display: none;
+    }
+    .actions.confirm-remove {
+      display: block;
     }
   }
 }
