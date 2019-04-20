@@ -47,7 +47,7 @@ export default {
   },
 
   mounted() {
-    if (Store.get("queueSearch")) {
+    if (Store.get("queueSearch") && !this.missingLanguages) {
       this.onSearch(Store.get("queueSearch"));
 
       Store.set("queueSearch", null);

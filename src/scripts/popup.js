@@ -1,9 +1,8 @@
 import browser from "webextension-polyfill";
 import Vue from "vue";
-import Store, { readStorage, saveStorage } from "../utils/Store";
-import Popup from "../vue-components/Popup";
-import { messageActiveTab, logActiveTab } from "../utils/Message";
-import { lookForTranslation } from "../utils/Translator";
+import Store, { doSearch } from "/utils/Store";
+import Popup from "/vue-components/Popup";
+import { messageActiveTab } from "/utils/Message";
 
 const renderPopup = () => {
   Store.setDebug(true);
@@ -20,7 +19,7 @@ const renderPopup = () => {
   messageActiveTab({ subject: "requestSelection" })
     .then(response => {
       if (response && response.selection !== "") {
-        lookForTranslation(response.selection);
+        doSearch(response.selection);
       }
     })
     .catch(error => {
