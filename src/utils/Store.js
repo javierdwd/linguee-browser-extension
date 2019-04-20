@@ -26,7 +26,7 @@ export async function readStorage(storageKey) {
 const store = {
   debug: false,
   state: {
-    panel: "settings",
+    panel: "search",
     langFrom: null,
     langTo: null
   },

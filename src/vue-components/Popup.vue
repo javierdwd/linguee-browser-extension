@@ -10,11 +10,13 @@
 
 <script>
 import Store, { loadSettings } from "/utils/Store";
+import Search from "./Search";
 import Settings from "./Settings";
 import NavigationBar from "./NavigationBar";
 
 export default {
   components: {
+    Search,
     Settings,
     NavigationBar
   },

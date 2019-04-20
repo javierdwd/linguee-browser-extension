@@ -15,9 +15,6 @@
 </template>
 
 <script>
-import Store from "/utils/Store";
-import { lookForTranslation } from "/utils/Translator";
-
 export default {
   data() {
     return {
@@ -27,21 +24,7 @@ export default {
 
   methods: {
     doSearch($event) {
-      Store.set("lookingForTranslation", true);
-
-      lookForTranslation(this.searchTerm)
-        .then(result => {
-          this.$emit("result", result);
-
-          Store.set("lookingForTranslation", false);
-
-          this.searchTerm = "";
-        })
-        .catch(error => {
-          console.log(error);
-
-          this.searchTerm = "";
-        });
+      this.$emit("search", this.searchTerm);
     }
   }
 };

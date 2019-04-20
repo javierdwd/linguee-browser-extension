@@ -4,10 +4,12 @@ const callBackground = function(props) {
   return messageRuntime(props);
 };
 
-export function lookForTranslation(term) {
+export function lookForTranslation(term, langFrom, langTo) {
   return callBackground({
     subject: "requestTranslation",
-    term
+    term,
+    langFrom,
+    langTo
   });
 }
 
