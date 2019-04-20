@@ -54,7 +54,8 @@ export default {
       lookForTranslation(searchTerm, this.langFrom, this.langTo)
         .then(translation => {
           if (translation.data) {
-            // Do something with this...
+            Store.set("currentTranslation", translation);
+            Store.set("panel", "results");
           } else {
             this.showMessage("No translation was found.");
           }

@@ -1,20 +1,28 @@
 <template>
   <ul class="tabs popup-bar z-depth-1" ref="popup-bar">
     <navigation-button
+      v-show="activePanel === 'results'"
       v-on:change-tab="onChangeTab"
-      :active=" activeButton == 'search' "
+      :active="true"
+      :name="'search'"
+    >close</navigation-button>
+
+    <navigation-button
+      v-show="activePanel !== 'results'"
+      v-on:change-tab="onChangeTab"
+      :active=" activePanel == 'search' "
       :name="'search'"
     >search</navigation-button>
 
     <navigation-button
       v-on:change-tab="onChangeTab"
-      :active="activeButton == 'history'"
+      :active="activePanel == 'history'"
       :name="'history'"
     >history</navigation-button>
 
     <navigation-button
       v-on:change-tab="onChangeTab"
-      :active="activeButton == 'settings'"
+      :active="activePanel == 'settings'"
       :name="'settings'"
     >settings_applications</navigation-button>
   </ul>
@@ -32,7 +40,7 @@ export default {
   },
 
   computed: {
-    activeButton: () => Store.get("panel")
+    activePanel: () => Store.get("panel")
   },
 
   methods: {

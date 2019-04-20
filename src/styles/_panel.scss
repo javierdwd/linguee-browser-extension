@@ -21,8 +21,9 @@
   width: 100%;
 }
 
-@import "panels/settings";
 @import "panels/search";
+@import "panels/results";
+@import "panels/settings";
 
 // Notification.
 .notification {
