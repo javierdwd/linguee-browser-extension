@@ -58,7 +58,7 @@ const requestTranslation = async function(message) {
   };
 
   if (supported) {
-    updateTsCache();
+    updateTsCache(translation);
   }
 
   return translation;
