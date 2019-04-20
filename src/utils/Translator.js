@@ -5,6 +5,10 @@ const callBackground = function(props) {
 };
 
 export function lookForTranslation(term, langFrom, langTo) {
+  term = term.toLowerCase();
+  langFrom = langFrom.toUpperCase();
+  langTo = langTo.toUpperCase();
+
   return callBackground({
     subject: "requestTranslation",
     term,
