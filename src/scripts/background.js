@@ -62,3 +62,22 @@ browser.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
     return linguee.langs.available(message.code);
   }
 });
+
+// Remove old-format data.
+browser.runtime.onInstalled.addListener(async details => {
+  if (details.reason === "update" && details.previousVersion === "0.1.0") {
+    const storage = await browser.storage.local.get({ tsCache: {} });
+
+    for (let id in storage.tsCache) {
+      if (storage.tsCache[id].hasOwnProperty("hits")) {
+        continue;
+      }
+
+      delete storage.tsCache[id];
+    }
+
+    browser.storage.local.set({
+      tsCache: storage.tsCache
+    });
+  }
+});
