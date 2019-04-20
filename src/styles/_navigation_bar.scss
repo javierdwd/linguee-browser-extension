@@ -3,7 +3,10 @@
   width: $popup-width;
   margin-top: auto;
 
+  $tabs-color: color("blue", "darken-1");
+
   .indicator {
+    background-color: $tabs-color;
     bottom: auto;
     top: 0;
   }
@@ -11,8 +14,17 @@
     width: 33.333%;
   }
   .tab a {
+    color: fade-out($tabs-color, 0.3);
     display: flex;
     align-items: center;
     justify-content: center;
+
+    &:hover,
+    &.active {
+      color: $tabs-color;
+    }
+    &:focus.active {
+      background-color: fade-out($tabs-color, 0.9);
+    }
   }
 }

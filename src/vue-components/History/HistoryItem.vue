@@ -1,12 +1,14 @@
 <template>
   <li class="collection-item" :class="{ 'confirm-mode': confirmMode }">
-    <div class="term">{{ item.queryTerm }}</div>
+    <div class="term">
+      <span>{{ item.queryTerm }}</span>
+    </div>
 
     <div class="actions basic">
-      <a href="#">
-        <i class="material-icons" @click.prevent="$emit('search', item.queryTerm)">search</i>
+      <a href="#" class="search" @click.prevent="$emit('search', item.queryTerm)">
+        <i class="material-icons">search</i>
       </a>
-      <a href="#" @click.prevent="setConfirmMode(true)">
+      <a href="#" class="delete" @click.prevent="setConfirmMode(true)">
         <i class="material-icons">delete</i>
       </a>
     </div>

@@ -9,7 +9,11 @@
   .row {
     margin: 0;
   }
+
+  $history-color: color("blue", "lighten-1");
+
   .collection {
+    border-radius: 4px;
     margin: 0;
     padding: 0;
   }
@@ -20,46 +24,89 @@
     line-height: 1;
     padding-left: 15px;
     padding-right: 15px;
+    transition: background-color 0.4s ease;
+
+    &:last-child {
+      border-bottom: 0;
+    }
 
     .term {
-      line-height: 1.2;
-      overflow: hidden;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      width: calc(70% - 30px);
-    }
-    .remove-term {
-      color: #e73c3c;
+      flex-grow: 1;
+      line-height: 1.875;
+
+      position: relative;
+      transition: width 0.4s linear 0.4s;
+      width: 100%;
+
+      span {
+        display: inline-block;
+        left: 50%;
+        max-width: 100%;
+        overflow: hidden;
+        position: absolute;
+        text-overflow: ellipsis;
+        transform: translateX(-50%);
+        transition: all 0.4s linear;
+        white-space: nowrap;
+      }
     }
     .actions {
       align-items: center;
       display: flex;
       justify-content: space-between;
-      opacity: 0;
-      transition: opacity 0.8s ease;
-      width: 30%;
+      overflow: hidden;
+      transition: all 0.4s;
+      width: 0px;
 
-      .material-icons {
-        font-size: 1.3rem;
-      }
-      .cancel {
-        font-size: 0.8rem;
-        color: #dd3535;
-      }
-      .confirm {
-        color: #008000;
-      }
-      &.confirm-remove {
-        flex-basis: 100%;
-        padding-left: 15px;
-        padding-right: 15px;
+      &.basic {
+        a {
+          color: color("grey", "lighten-1");
+          font-size: 1.3rem;
+          transition: all 0.4s;
+
+          &:hover {
+            transform: scale(1.1);
+          }
+        }
+        .search:hover {
+          color: color("green", "accent-3");
+        }
+        .delete:hover {
+          color: color("red", "accent-2");
+        }
       }
       &.confirm-remove {
         display: none;
+        flex-basis: 100%;
+        line-height: 1.9;
+        padding-left: 15px;
+        padding-right: 15px;
+
+        .cancel {
+          color: color("grey", "base");
+          display: inline-block;
+          font-size: 0.8rem;
+          margin-right: 0.4rem;
+        }
+        .confirm {
+          color: color("red", "accent-2");
+        }
       }
     }
-    &:hover .actions {
-      opacity: 1;
+  }
+  .collection-item:hover {
+    .term {
+      transition-delay: 0s;
+      width: calc(70% - 30px);
+
+      span {
+        left: 0;
+        transform: translateX(0);
+      }
+    }
+    .actions {
+      transition-delay: 0.2s;
+      width: 30%;
     }
   }
   .collection-item.confirm-mode {
