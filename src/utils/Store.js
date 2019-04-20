@@ -28,10 +28,13 @@ export async function readStorage(storageKey) {
 const store = {
   debug: false,
   state: {
-    panel: "search",
+    panel: "history",
     langFrom: null,
     langTo: null,
-    currentTranslation: null
+    currentTranslation: null,
+    queueSearch: null,
+    historyLatest: null,
+    historyPopular: null
   },
   setDebug(payload) {
     if (payload) log("debug", payload);
@@ -51,8 +54,6 @@ const store = {
 export async function loadSettings() {
   const settings = await readStorage("settings");
 
-  console.log(settings);
-
   if (settings.langFrom && settings.langTo) {
     store.set("langFrom", settings.langFrom);
     store.set("langTo", settings.langTo);
@@ -67,6 +68,51 @@ export function saveLangSetting(stateProp, value) {
   return saveStorage("settings", {
     [stateProp]: value
   });
+}
+
+export async function getRankings() {
+  const rankings = {};
+  const tsCache = await readStorage("tsCache");
+  const limit = 8;
+
+  const historyList = Object.entries(tsCache).map(x => {
+    x[1].cDate = new Date(x[1].time);
+
+    return x[1];
+  });
+
+  // Latest.
+  rankings.latest = historyList
+    .sort((a, b) => {
+      return a.time > b.time ? -1 : a.time < b.time ? 1 : 0;
+    })
+    .slice(0, limit);
+
+  // Popular.
+  const minTime = Date.now() - 3600 * 24 * 30 * 1000; // A month ago.
+
+  rankings.popular = historyList
+    .filter(x => {
+      return x.time >= minTime;
+    })
+    .sort((a, b) => {
+      return a.hits > b.hits ? -1 : a.hits < b.hits ? 1 : 0;
+    })
+    .slice(0, limit);
+
+  return rankings;
+}
+
+export async function loadRankings() {
+  const rankings = await getRankings();
+
+  store.set("historyLatest", rankings.latest);
+  store.set("historyPopular", rankings.popular);
+}
+
+export function doSearch(queryTerm) {
+  store.set("queueSearch", queryTerm);
+  store.set("panel", "search");
 }
 
 export default store;

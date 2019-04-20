@@ -17,7 +17,25 @@ const requestTranslation = async function(message) {
   const storage = await browser.storage.local.get({ tsCache: {} });
   const id = `${message.langFrom}-${message.langTo}-${message.term}`;
 
+  const updateTsCache = async function(translation) {
+    try {
+      // Update/Insert translation.
+      storage.tsCache[translation.id] = translation;
+
+      // Replace the entire copy of tsCache in the browser.
+      await browser.storage.local.set({
+        tsCache: storage.tsCache
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   if (storage.tsCache.hasOwnProperty(id)) {
+    storage.tsCache[id].hits++;
+
+    updateTsCache(storage.tsCache[id]);
+
     return storage.tsCache[id];
   }
 
@@ -29,36 +47,70 @@ const requestTranslation = async function(message) {
 
   const supported = supportedData(apiResponse);
 
+  // Create a new Translation object.
   const translation = {
     id,
-    queryTerm: message.term,
-    time: new Date().getTime(),
+    queryTerm: apiResponse.queryTerm,
+    time: Date.now(),
     hits: 1,
     data: supported ? apiResponse : null,
     tempData: apiResponse
   };
 
   if (supported) {
-    try {
-      storage.tsCache[translation.id] = translation;
-
-      await browser.storage.local.set({
-        tsCache: storage.tsCache
-      });
-    } catch (error) {
-      console.log(error);
-    }
+    updateTsCache(translation);
   }
 
   return translation;
 };
 
-browser.runtime.onMessage.addListener(async (message, sender, sendResponse) => {
+const removeTranslation = async function(message) {
+  const storage = await browser.storage.local.get({ tsCache: {} });
+
+  if (storage.tsCache.hasOwnProperty(message.id)) {
+    delete storage.tsCache[message.id];
+
+    try {
+      await browser.storage.local.set({
+        tsCache: storage.tsCache
+      });
+    } catch (error) {
+      console.log(error);
+
+      return false;
+    }
+
+    return true;
+  }
+};
+
+browser.runtime.onMessage.addListener(async (message, sender) => {
   if (message.subject === "requestTranslation") {
-    return requestTranslation(message, sender, sendResponse);
+    return requestTranslation(message, sender);
+  } else if (message.subject === "removeTranslation") {
+    return removeTranslation(message, sender);
   } else if (message.subject === "getLangs") {
     return linguee.langs.list();
   } else if (message.subject === "getAvailablesLangsByCode") {
     return linguee.langs.available(message.code);
+  }
+});
+
+// Remove old-format data.
+browser.runtime.onInstalled.addListener(async details => {
+  if (details.reason === "update" && details.previousVersion === "0.1.0") {
+    const storage = await browser.storage.local.get({ tsCache: {} });
+
+    for (let id in storage.tsCache) {
+      if (storage.tsCache[id].hasOwnProperty("hits")) {
+        continue;
+      }
+
+      delete storage.tsCache[id];
+    }
+
+    browser.storage.local.set({
+      tsCache: storage.tsCache
+    });
   }
 });

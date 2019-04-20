@@ -37,11 +37,20 @@ export default {
   computed: {
     langFrom: () => Store.get("langFrom"),
     langTo: () => Store.get("langTo"),
+    queueSearch: () => Store.get("queueSearch"),
     missingLanguages() {
       return !this.langFrom || !this.langTo;
     },
     showSearchBox() {
       return !this.missingLanguages && !this.waitingResponse;
+    }
+  },
+
+  mounted() {
+    if (Store.get("queueSearch")) {
+      this.onSearch(Store.get("queueSearch"));
+
+      Store.set("queueSearch", null);
     }
   },
 
