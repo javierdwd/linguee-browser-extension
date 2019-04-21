@@ -46,11 +46,11 @@ export default {
     }
   },
 
-  mounted() {
-    if (Store.get("queueSearch") && !this.missingLanguages) {
-      this.onSearch(Store.get("queueSearch"));
-
-      Store.set("queueSearch", null);
+  watch: {
+    queueSearch(newValue) {
+      if (newValue !== null) {
+        this.onSearch(newValue);
+      }
     }
   },
 
@@ -86,6 +86,14 @@ export default {
     },
     cleanMessage() {
       this.notification = null;
+    }
+  },
+
+  mounted() {
+    if (Store.get("queueSearch") && !this.missingLanguages) {
+      this.onSearch(Store.get("queueSearch"));
+
+      Store.set("queueSearch", null);
     }
   }
 };
