@@ -34,8 +34,8 @@ export default {
   },
 
   methods: {
-    onSearch(queryTerm) {
-      doSearch(queryTerm);
+    onSearch(searchCode) {
+      doSearch(searchCode);
     },
     onDelete(id) {
       removeTranslation(id)

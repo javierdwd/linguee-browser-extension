@@ -5,7 +5,7 @@
     </div>
 
     <div class="actions basic">
-      <a href="#" class="search" @click.prevent="$emit('search', item.queryTerm)">
+      <a href="#" class="search" @click.prevent="$emit('search', item.id)">
         <i class="material-icons">search</i>
       </a>
       <a href="#" class="delete" @click.prevent="setConfirmMode(true)">

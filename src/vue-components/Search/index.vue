@@ -15,7 +15,11 @@
 
 <script>
 import Store from "/utils/Store";
-import { lookForTranslation, getLangs } from "/utils/Translator";
+import {
+  lookForTranslation,
+  getLangs,
+  parseSearchCode
+} from "/utils/Translator";
 import SearchBox from "./SearchBox";
 import NotificationBox from "/vue-components/common/NotificationBox";
 import PreloaderSpinner from "/vue-components/common/PreloaderSpinner";
@@ -55,12 +59,18 @@ export default {
   },
 
   methods: {
-    onSearch(searchTerm) {
+    onSearch(searchCode) {
       this.cleanMessage();
 
       this.waitingResponse = true;
 
-      lookForTranslation(searchTerm, this.langFrom, this.langTo)
+      const st = parseSearchCode(searchCode);
+
+      lookForTranslation(
+        st.queryTerm,
+        st.langFrom || this.langFrom,
+        st.langTo || this.langTo
+      )
         .then(translation => {
           if (translation.data) {
             Store.set("currentTranslation", translation);
