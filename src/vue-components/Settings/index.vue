@@ -4,11 +4,17 @@
 
     <div class="container">
       <div class="row">
-        <div class="col s6">
+        <div class="col s5">
           <m-form-select :options="fromOptions" @change="onChange('From', $event)">Translate From</m-form-select>
         </div>
 
-        <div class="col s6">
+        <div class="col s2">
+          <a class="waves-effect waves-light btn-small swap-languages-btn" @click="onSwapLanguages">
+            <i class="material-icons small">swap_horiz</i>
+          </a>
+        </div>
+
+        <div class="col s5">
           <m-form-select :options="toOptions" @change="onChange('To', $event)">To</m-form-select>
         </div>
       </div>
@@ -59,6 +65,8 @@ export default {
     };
   },
 
+  isSwapping: false,
+
   methods: {
     onChange(selectName, selected) {
       if (
@@ -73,6 +81,24 @@ export default {
       if (selectName === "From") {
         this.populateToOptions(selected);
       }
+    },
+    async onSwapLanguages() {
+      if (this.$options.isSwapping) {
+        return null;
+      }
+
+      this.$options.isSwapping = true;
+
+      const newLangFrom = Store.get("langTo");
+      const newLangTo = Store.get("langFrom");
+
+      await saveLangSetting(`langFrom`, newLangFrom);
+      await saveLangSetting(`langTo`, newLangTo);
+
+      this.populateFromOptions(newLangFrom);
+      this.populateToOptions(newLangFrom, newLangTo);
+
+      this.$options.isSwapping = false;
     },
     populateFromOptions(selected = false) {
       this.fromOptions = formatOptions(this.langs, selected);

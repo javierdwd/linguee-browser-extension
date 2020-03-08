@@ -19,7 +19,7 @@ export async function saveStorage(storageKey, data) {
 
 export async function readStorage(storageKey) {
   const storage = await browser.storage.local.get({
-    [storageKey]: {} // Opera doesn't need this, but Chrome/Firefox does.
+    [storageKey]: {} // Opera doesn't need this, but Chrome/Firefox do.
   });
 
   return storage[storageKey];
