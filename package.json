@@ -1,6 +1,6 @@
 {
   "name": "linguee-browser-extension",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A WebExtension for translating terms using the Linguee.com service.",
   "main": "src/index.js",
   "scripts": {
